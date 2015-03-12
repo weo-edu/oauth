@@ -2,14 +2,14 @@ var ware = require('ware');
 var popup = require('oauth-popup');
 var qs = require('qs');
 
-module.exports = function(opts, getToken, cb) {
+module.exports = function(opts, cb) {
   opts = opts || {};
   if(! getToken)
     throw new Error('must provide getToken function');
 
   var mw = ware();
   mw.use(popup(opts.popup || {}));
-  mw.use(getToken);
+  mw.use(opts.getToken);
   mw.use(opts.storeToken || storeToken());
   mw.run(buildUrl(opts.provider), cb);
 }
