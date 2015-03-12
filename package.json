@@ -18,5 +18,10 @@
   "bugs": {
     "url": "https://github.com/weo-edu/oauth/issues"
   },
-  "homepage": "https://github.com/weo-edu/oauth"
+  "homepage": "https://github.com/weo-edu/oauth",
+  "dependencies": {
+    "oauth-popup": "git://github.com/weo-edu/oauth-popup",
+    "qs": "^2.4.0",
+    "ware": "^1.2.0"
+  }
 }
