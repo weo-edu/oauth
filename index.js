@@ -18,7 +18,7 @@ function buildUrl(provider) {
   var url = provider.url;
   return url + '?' + qs.stringify({
     clientId: provider.clientId,
-    scopes: provider.scopes,
+    scope: provider.scope,
     redirectUri: provider.redirectUri
   });
 }
