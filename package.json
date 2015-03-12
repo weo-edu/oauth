@@ -1,0 +1,22 @@
+{
+  "name": "oauth",
+  "version": "0.1.0",
+  "description": "Simple oauth 2.0 module",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/weo-edu/oauth"
+  },
+  "keywords": [
+    "oauth"
+  ],
+  "author": "ashaffer (http://github.com/ashaffer)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/weo-edu/oauth/issues"
+  },
+  "homepage": "https://github.com/weo-edu/oauth"
+}
