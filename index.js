@@ -1,31 +1,33 @@
-var ware = require('ware');
 var popup = require('oauth-popup');
-var qs = require('qs');
+var oauthUrl = require('oauth-url');
 
-module.exports = function(opts, cb) {
-  opts = opts || {};
-  if(! getToken)
-    throw new Error('must provide getToken function');
+function OAuth(provider) {
+  if(! (this instanceof OAuth))
+    return new OAuth(provider);
 
-  var mw = ware();
-  mw.use(popup(opts.popup || {}));
-  mw.use(opts.getToken);
-  mw.use(opts.storeToken || storeToken());
-  mw.run(buildUrl(opts.provider), cb);
+  this.provider = provider;
+  this.url = oauthUrl(this.provider);
 }
 
-function buildUrl(provider) {
-  var url = provider.url;
-  return url + '?' + qs.stringify({
-    clientId: provider.clientId,
-    scope: provider.scope,
-    redirectUri: provider.redirectUri
+OAuth.prototype.open = function(opts, cb) {
+  if(arguments.length === 1) {
+    cb = opts;
+    opts = this.provider.popupDefaults || {};
+  }
+
+  var self = this;
+  popup(this.url, opts, function(err, oauthData) {
+    if(oauthData)
+      oauthData.providerName = self.provider.name;
+    cb(err, oauthData);
   });
-}
 
-function storeToken(name) {
-  return function(token, next) {
-    window.localStorage[name || 'oauth_token'] = token;
-    next();
-  };
+  return this;
 };
+
+OAuth.prototype.storeToken = function(token) {
+  window.localStorage.oauth_token = token;
+  return this;
+};
+
+module.exports = OAuth;
