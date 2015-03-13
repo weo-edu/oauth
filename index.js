@@ -1,13 +1,18 @@
 var popup = require('oauth-popup');
 var oauthUrl = require('oauth-url');
 
-function OAuth(provider) {
+function OAuth() {
   if(! (this instanceof OAuth))
     return new OAuth(provider);
-
-  this.provider = provider;
-  this.url = oauthUrl(provider.baseUrl, provider);
 }
+
+OAuth.prototype.use = function(plugin) {
+  plugin(this);
+  return this;
+};
+
+Oauth.prototype.popup = popup;
+Oauth.prototype.oauthUrl = oauthUrl;
 
 OAuth.prototype.open = function(opts, cb) {
   if(arguments.length === 1) {
@@ -15,10 +20,15 @@ OAuth.prototype.open = function(opts, cb) {
     opts = this.provider.popupDefaults || {};
   }
 
-  var self = this;
-  popup(this.url, opts, function(err, oauthData) {
-    if(oauthData)
-      oauthData.providerName = self.provider.name;
+  var provider = this.provider;
+  var url = this.oauthUrl(provider.baseUrl, provider);
+
+  this.popup(url, opts, function(err, oauthData) {
+    if(oauthData) {
+      oauthData.providerName = provider.name;
+      oauthData.scope = provider.scope;
+    }
+
     cb(err, oauthData);
   });
 
