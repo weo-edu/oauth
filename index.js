@@ -6,7 +6,7 @@ function OAuth(provider) {
     return new OAuth(provider);
 
   this.provider = provider;
-  this.url = oauthUrl(this.provider);
+  this.url = oauthUrl(provider.baseUrl, provider);
 }
 
 OAuth.prototype.open = function(opts, cb) {
