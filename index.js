@@ -11,8 +11,8 @@ OAuth.prototype.use = function(plugin) {
   return this;
 };
 
-Oauth.prototype.popup = popup;
-Oauth.prototype.oauthUrl = oauthUrl;
+OAuth.prototype.popup = popup;
+OAuth.prototype.oauthUrl = oauthUrl;
 
 OAuth.prototype.open = function(opts, cb) {
   if(arguments.length === 1) {
