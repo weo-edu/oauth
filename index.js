@@ -25,9 +25,4 @@ OAuth.prototype.open = function(opts, cb) {
   return this;
 };
 
-OAuth.prototype.storeToken = function(token) {
-  window.localStorage.oauth_token = token;
-  return this;
-};
-
 module.exports = OAuth;
